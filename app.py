@@ -6,8 +6,8 @@ from flask import (
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
-DATABASE = 'portfolio.db'
+app.secret_key = os.environ.get('SECRET_KEY', 'dev-only-change-me')
+DATABASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'portfolio.db')
 
 # ==========================================
 # DATABASE INITIALIZATION & HELPER FUNCTIONS
@@ -1348,8 +1348,10 @@ def update_settings():
 # APPLICATION LAUNCHER
 # ==========================================
 
+# Runs on import so gunicorn (Render) also creates/seeds the tables
+init_db()
+
 if __name__ == '__main__':
-    init_db()
     print("\n🚀 Starting Portfolio CMS Server...")
     print("👉 Public Site: http://127.0.0.1:5000/")
     print("🔑 Admin Username: admin")
