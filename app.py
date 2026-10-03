@@ -1347,6 +1347,23 @@ def update_settings():
 # ==========================================
 # APPLICATION LAUNCHER
 # ==========================================
+import sqlite3
+
+def init_db():
+    with sqlite3.connect('portfolio.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS profile (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT,
+                title TEXT,
+                bio TEXT
+            )
+        ''')
+        conn.commit()
+
+# Run it immediately when app starts
+init_db()
 
 if __name__ == '__main__':
     init_db()
