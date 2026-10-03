@@ -1347,58 +1347,9 @@ def update_settings():
 # ==========================================
 # APPLICATION LAUNCHER
 # ==========================================
-import sqlite3
-
-def init_db():
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT UNIQUE NOT NULL,
-            password_hash TEXT NOT NULL
-        )
-    ''')
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS profile (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            title TEXT,
-            bio TEXT,
-            about_story TEXT
-        )
-    ''')
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS skills (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            category TEXT NOT NULL,
-            proficiency INTEGER NOT NULL
-        )
-    ''')
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS projects (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT NOT NULL,
-            description TEXT NOT NULL,
-            technologies TEXT NOT NULL,
-            github_url TEXT
-        )
-    ''')
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS settings (
-            key TEXT PRIMARY KEY,
-            value TEXT
-        )
-    ''')
-    conn.commit()
-    conn.close()
-
-# Run table creation automatically whenever the app starts up (works for both Render & local)
-with app.app_context():
-    init_db()
 
 if __name__ == '__main__':
+    init_db()
     print("\n🚀 Starting Portfolio CMS Server...")
     print("👉 Public Site: http://127.0.0.1:5000/")
     print("🔑 Admin Username: admin")
