@@ -1394,15 +1394,11 @@ def init_db():
     conn.commit()
     conn.close()
 
-# THIS IS THE CRUCIAL PART: Run it automatically on startup
+# Run table creation automatically whenever the app starts up (works for both Render & local)
 with app.app_context():
     init_db()
 
 if __name__ == '__main__':
-    app.run(debug=True)
-
-if __name__ == '__main__':
-    init_db()
     print("\n🚀 Starting Portfolio CMS Server...")
     print("👉 Public Site: http://127.0.0.1:5000/")
     print("🔑 Admin Username: admin")
